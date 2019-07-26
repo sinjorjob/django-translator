@@ -1,0 +1,70 @@
+{% extends '../base.html' %}
+{% load bootstrap4 %}
+{% load widget_tweaks %}
+{% load static %}
+<link rel="stylesheet" href="{% static "css/talkarea.css" %}">
+
+{% block title %}
+【ドラゴンボール】キャラクタの戦闘力回答AIボット
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  
+    <form action="" method="post">{% csrf_token %}
+        <h1>【ドラゴンボール】キャラクタの戦闘力回答AIボット</h1>
+        
+        <div class="form-group row my-4">         
+            <label class="col-lg-2 col-form-label"><h4>{{form.messages.label}}</h4></label><br>
+    		<div class="col-lg-6">       
+                {{form.messages|add_class:"form-control"}}
+
+    		</div>
+
+         <div class="col-lg-2">       
+                <a href = "http://127.0.0.1:8000/demo/dq_bot/">入力文クリア</a>
+               </div>
+        </div>
+        <div class="col-lg-2">       
+                <button type="submit" class="btn btn-primary">実行</button>
+            </div>
+     </form>
+     <hr>
+
+
+
+
+<div id="talkarea">
+
+{% if answers %}
+<div class="card-body">
+    <div class="card mb-3">
+    <div class="card-header">
+    <div class="card-text">
+
+{% for answer in answers %}  
+
+<div class="card" style="width: 45rem;">
+        <div class="card-header text-white bg-primary mb-3">
+         <h4>{{answer.0}}番目にマッチしている回答</h4>
+        </div>
+        <div class="card-body">
+          <p class="card-text"> <h4><b>質問内容：</b>{{ answer.1 }}<br><br>
+            <hr>
+            <b>回答内容：</b>{{ answer.2 }}<br></h4></p>
+        </div>
+        <div class="card-footer bg-warning mb-3">
+        <h4> <b>類似度：</b>{{ answer.3 }}</h4>
+        </div>
+      </div>
+      <hr>
+         {% endfor %}
+        </div>
+
+{% endif %}
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
